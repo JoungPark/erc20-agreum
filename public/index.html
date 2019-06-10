@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <title>Web3js</title>
+</header>
+
+<body>
+    <h1>Web3js</h1>    
+    <input type="file" name="fileName" onchange="loadAbi(this)"/>
+    <p>https://github.com/ethereum/wiki/wiki/JavaScript-API</p>
+    <script>
+        function loadAbi(evt) {
+            var input = event.target;
+
+            var reader = new FileReader();
+            reader.onload = function(){
+                var abiArray = JSON.parse(reader.result);
+
+                let MyContract = web3.eth.contract(abiArray);
+
+                var myContractInstance = MyContract.at('0xde1363f743662b1fd9f530e4ae722b02aaf06b61');
+
+                myContractInstance.balanceOf('0xd0e1B723815F5f81F4B3e2c557eA5d91Fed605e0', (error, result) => {
+                    console.log(result)
+                })
+                myContractInstance.balanceOf('0xdf5df4af35a89c379e0c7eaaa99d94c38169ed4d', (error, result) => {
+                    console.log(result)
+                })
+            };
+            reader.readAsText(input.files[0]);
+        }
+
+        window.addEventListener('load', function () {
+
+            if (typeof web3 !== 'undefined') {
+                web3js = new Web3(web3.currentProvider);
+                console.log(web3js)
+            } else {
+                console.log(web3)
+            }
+
+            web3.version.getEthereum((error, result) => {
+                console.log(result)
+            })
+
+            web3.version.getNetwork((err, netId) => {
+                switch (netId) {
+                    case "1":
+                        console.log('This is mainnet')
+                        break
+                    case "2":
+                        console.log('This is the deprecated Morden test network.')
+                        break
+                    case "3":
+                        console.log('This is the ropsten test network.')
+                        break
+                    case "4":
+                        console.log('This is the Rinkeby test network.')
+                        break
+                    case "42":
+                        console.log('This is the Kovan test network.')
+                        break
+                    default:
+                        console.log('This is an unknown network.')
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
