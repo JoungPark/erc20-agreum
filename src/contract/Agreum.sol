@@ -5,12 +5,12 @@ import "./ERC20Detailed.sol";
 import "./ERC20Burnable.sol";
 
 /**
- * @title SimpleToken
+ * @title Agreum
  * @dev Very simple ERC20 Token example, where all tokens are pre-assigned to the creator.
  * Note they can later distribute these tokens as they wish using `transfer` and other
  * `ERC20` functions.
  */
-contract SimpleToken is ERC20, ERC20Detailed, ERC20Burnable {
+contract Agreum is ERC20, ERC20Detailed, ERC20Burnable {
 
     /**
      * @dev Constructor that gives msg.sender all of existing tokens.

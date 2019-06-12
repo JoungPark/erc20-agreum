@@ -9,6 +9,9 @@
     <input type="file" name="fileName" onchange="loadAbi(this)"/>
     <p>https://github.com/ethereum/wiki/wiki/JavaScript-API</p>
     <script>
+        const agreumContract = '0xde1363f743662b1fd9f530e4ae722b02aaf06b61';
+        const address1 = '0xd0e1B723815F5f81F4B3e2c557eA5d91Fed605e0';
+        const address2 = '0xdf5df4af35a89c379e0c7eaaa99d94c38169ed4d';
         function loadAbi(evt) {
             var input = event.target;
 
@@ -18,14 +21,27 @@
 
                 let MyContract = web3.eth.contract(abiArray);
 
-                var myContractInstance = MyContract.at('0xde1363f743662b1fd9f530e4ae722b02aaf06b61');
+                var myContractInstance = MyContract.at(agreumContract);
 
-                myContractInstance.balanceOf('0xd0e1B723815F5f81F4B3e2c557eA5d91Fed605e0', (error, result) => {
-                    console.log(result)
-                })
-                myContractInstance.balanceOf('0xdf5df4af35a89c379e0c7eaaa99d94c38169ed4d', (error, result) => {
-                    console.log(result)
-                })
+                myContractInstance.balanceOf(address1, (error, balance) => {
+                    console.log(balance.toString());
+                });
+                myContractInstance.balanceOf(address2, (error, balance) => {
+                    console.log(balance.toString());
+                });
+                myContractInstance.name((error, result) => {
+                    console.log(result);
+                });
+                // myContractInstance.transfer(address2, 10000000000000000000, (error, txnHash) => {
+                //     console.log(txnHash);
+                // });
+                // myContractInstance.approve(address1, 100000000000000000000, (error, txnHash) => {
+                //     console.log(txnHash);
+                
+                //     myContractInstance.transferFrom(address1, address2, 100000000000000000000, (error, txnHash) => {
+                //         console.log(txnHash);
+                //     });
+                // });
             };
             reader.readAsText(input.files[0]);
         }
@@ -34,14 +50,18 @@
 
             if (typeof web3 !== 'undefined') {
                 web3js = new Web3(web3.currentProvider);
-                console.log(web3js)
+                console.log(web3js);
             } else {
-                console.log(web3)
+                console.log(web3);
             }
 
+            web3.eth.getBalance('0xd0e1B723815F5f81F4B3e2c557eA5d91Fed605e0', (error, result) => {
+                console.log(result.toString());
+            });
+
             web3.version.getEthereum((error, result) => {
-                console.log(result)
-            })
+                console.log(result);
+            });
 
             web3.version.getNetwork((err, netId) => {
                 switch (netId) {
@@ -63,7 +83,7 @@
                     default:
                         console.log('This is an unknown network.')
                 }
-            })
+            });
         })
     </script>
 </body>
